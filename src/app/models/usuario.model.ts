@@ -21,19 +21,14 @@ constructor(
     // }
 
     get imageUrl()  {
-        
-        // return 'http://localhost:3000/api/upload/usuarios/0345e584-e581-4c0a-a963-1a3416d93fa0.png';
 
-        if (this.img?.includes('https')){
+        if ( !this.img){
+            return `${ base_url}/upload/usuarios/no-image`
+        }else if (this.img?.includes('https')){
             return this.img;
-        }
-
-        // console.log(this.img);
-        if ( this.img){
-            // console.log(`${ base_url }/upload/usuarios/${this.img}`);
+        }else if ( this.img){
             return `${ base_url }/upload/usuarios/${this.img}`;
         }else{
-            // console.log(`${ base_url }/upload/usuarios/no-image`);
             return  `${ base_url }/upload/usuarios/no-image`;
         }
     }
