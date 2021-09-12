@@ -21,7 +21,7 @@ export class UsuariosComponent implements OnInit , OnDestroy{
   public usuarios: Usuario[] = [];
   public usuariosTemp: Usuario[] = [];
 
-  public imgSubs!: Subscription;
+  public imgSubs!: Subscription; 
   public desde : number= 0;
   public cargando: boolean = true;
 
@@ -79,7 +79,7 @@ export class UsuariosComponent implements OnInit , OnDestroy{
 
    this.busquedasServices.buscar( 'usuarios', termino)
     .subscribe( resultados => {
-      this.usuarios = resultados
+      this.usuarios = resultados as Usuario[];
     });
   }
 
@@ -119,8 +119,7 @@ export class UsuariosComponent implements OnInit , OnDestroy{
   }
 
   abrirModal(usuario: Usuario){
-    // console.log(usuario);
-    // uid : string | undefined
+   
     this.modalImagenService.abrirModal('usuarios', usuario.uid!, usuario.img);
   }
 
