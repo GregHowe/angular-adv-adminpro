@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from '../guards/admin.guard';
 import { AuthGuard } from '../guards/auth.guard';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
@@ -24,16 +26,19 @@ const routes: Routes = [
           {path: '', component: DashboardComponent, data: { titulo: 'Dashboard' }},
           {path: 'progress', component: ProgressComponent, data: { titulo: 'ProgressBar' } },
           {path: 'grafica1', component: Grafica1Component, data: { titulo: 'Gráfica #1' } },
+          {path: 'buscar/:termino', component:  BusquedaComponent, data: { titulo: 'Busquedas' } },
           {path: 'account-settings', component:  AccountSettingsComponent, data: { titulo: 'Ajustes' } },
           {path: 'promesas', component:  PromesasComponent, data: { titulo: 'Promesas' } },
           {path: 'rxjs', component:  RxjsComponent, data: { titulo: 'Rxjs' } },
           {path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil de Usuario' } },
           
-          //Mantenimientos
-          {path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
+          //Mantenimientos          
           {path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Mantenimiento de Hospitales' } },
           {path: 'medicos', component: MedicosComponent, data: { titulo: 'Mantenimiento de Médicos' } },
-          {path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Mantenimiento de Médico' } },
+          {path: 'medico/:id',  component: MedicoComponent, data: { titulo: 'Mantenimiento de Médico' } },
+
+          //Rutas de Admin
+          {path: 'usuarios',  canActivate: [AdminGuard] , component: UsuariosComponent, data: { titulo: 'Mantenimiento de Usuarios' } },
         ]
       }
 ];

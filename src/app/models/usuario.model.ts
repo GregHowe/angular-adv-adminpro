@@ -11,7 +11,7 @@ constructor(
     public nombre: string ,
     public email: string ,
     public pasword?: string ,
-    public role?: string ,
+    public role?: 'ADMIN_ROLE' | 'USER_ROLE' ,
     public google?: boolean ,
     public img?: string ,
     public uid?: string ) {}

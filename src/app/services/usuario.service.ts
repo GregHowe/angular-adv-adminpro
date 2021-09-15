@@ -36,6 +36,10 @@ export class UsuarioService {
       return  localStorage.getItem('token') || '';
     }                 
 
+    get role():'ADMIN_ROLE' | 'USER_ROLE'{
+        return this.usuario?.role!;
+    }
+
     get uid() : string{
       return this.usuario?.uid || '';
     }
@@ -67,9 +71,18 @@ export class UsuarioService {
      
     }
 
+guardarlocalStorage(  token:string, menu: any ){
+
+  localStorage.setItem('token', token)
+  localStorage.setItem('menu',  JSON.stringify( menu));
+
+}
+
+
   logout(){
     localStorage.removeItem('token');
-    
+    localStorage.removeItem('menu');
+
     this.auth2.signOut().then( () => {
       this.ngZone.run( () => {
       this.router.navigateByUrl('/login');
@@ -91,7 +104,10 @@ export class UsuarioService {
         
         this.usuario = new Usuario(nombre, email, '', role,google,  img , uid);
         // console.log(this.usuario);
-        localStorage.setItem('token', resp.token)
+        // localStorage.setItem('token', resp.token)
+        // localStorage.setItem('menu', resp.menu)
+        this.guardarlocalStorage(resp.token, resp.menu);
+
         return true;
       }),
       // map(resp => true ),
@@ -106,7 +122,9 @@ export class UsuarioService {
             .pipe(
               tap( (resp:any) => {
                   // console.log(resp);
-                  localStorage.setItem('token', resp.token)
+                  // localStorage.setItem('token', resp.token)
+                  // localStorage.setItem('menu', resp.menu)
+                  this.guardarlocalStorage(resp.token, resp.menu);
               })
             )
 
@@ -130,7 +148,8 @@ export class UsuarioService {
                   .pipe(
                     tap( (resp:any) => {
                         // console.log(resp);
-                        localStorage.setItem('token', resp.token)
+                        // localStorage.setItem('token', resp.token)
+                        this.guardarlocalStorage(resp.token, resp.menu);
                     })
                   )
 
@@ -143,7 +162,8 @@ export class UsuarioService {
                   .pipe(
                     tap( (resp:any) => {
                         // console.log(resp);
-                        localStorage.setItem('token', resp.token)
+                        // localStorage.setItem('token', resp.token)
+                        this.guardarlocalStorage(resp.token, resp.menu);
                     })
                   )
 
@@ -181,6 +201,7 @@ export class UsuarioService {
 
   guardarUsuario( usuario: Usuario){
 
+    // console.log(  `${ base_url }/usuarios/${ usuario.uid }` );
     return this.http.put(`${ base_url }/usuarios/${ usuario.uid }`, usuario, this.headers);
 
   }
